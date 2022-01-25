@@ -9,24 +9,16 @@ public class MonitorPuente {
 			try {
 				wait();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
-		//si el puente esta libre, el coche entra y lo pone en false, como ocupado
 		puente = false;
 		
 	}
 	
-	
-	
 	public synchronized void liberarPuente () {
-			//el coche ha pasado
-			puente = true;
-			
-			//se notifican a los coches opuestos de que el puente esta libre
-			notify();
+		puente = true;
+		notify();
 		
 	}
 
