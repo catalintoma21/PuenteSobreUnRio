@@ -1,0 +1,64 @@
+import java.util.Random;
+
+public class Coche extends Thread{
+	
+	public enum STATE {PARADO, CIRCULANDO}
+	private STATE state;
+	private String direccion;
+	private MonitorPuente monitor;
+	private int vecesPasadas;
+	
+	public Coche(String d, MonitorPuente m) {
+	
+		direccion= d;
+		state = STATE.PARADO;
+		monitor = m;
+		start();
+	}
+	
+
+	
+	private void parado() {
+		System.out.println("Coche del " + direccion + " esta parado y espera poder pasar.");
+		
+		monitor.accesoPuente();
+		
+		state=STATE.CIRCULANDO;
+		
+	}
+	
+	private void circulando() {
+		System.out.println("Coche del " + direccion + " esta cruzando el puente." );
+		Random rnd= new Random();
+		int tiempoCruce = rnd.nextInt(250 - 50 + 1) + 50;
+		try {
+			sleep(tiempoCruce);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+    
+		vecesPasadas++;
+		System.out.println("Un coche del " + direccion + " acaba de cruzar el puente. Veces cuzadas: " + vecesPasadas);
+		monitor.liberarPuente();
+		state=STATE.PARADO;
+	}
+
+	@Override
+	public void run() {
+		
+		while(true) {
+			switch(state) {
+			case PARADO:
+				parado();
+				break;
+			
+			case CIRCULANDO:
+				circulando();
+				break;
+			}
+		}
+		
+	}
+	
+
+}
