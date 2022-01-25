@@ -1,0 +1,14 @@
+
+public class Program {
+
+	public static void main(String[] args) {
+
+		
+		MonitorPuente monitor= new MonitorPuente();
+		
+		new Coche ("Norte", monitor);
+		new Coche("Sur", monitor);
+
+	}
+
+}
